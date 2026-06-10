@@ -116,6 +116,10 @@ export const DailyRecordings: React.FC<React.PropsWithChildren<unknown>> = ({
         const localInstance = instances['__local__'];
 
         const newLocalState: RecordingInstanceState = {
+          // Preserve fields populated by the recording-started event handler
+          // (recordingStartedDate, startedBy, recordingId, layout) so the
+          // participant-based update path doesn't clobber them.
+          ...localInstance,
           instanceId: '__local__',
           isLocalParticipantRecorded: hasRecordingParticipants,
           isRecording: hasRecordingParticipants,
